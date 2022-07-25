@@ -1,10 +1,10 @@
 :root {  
     --mobile-hero-app-row: 9fr;  
-   }  
-   html {  
+}  
+html {  
     box-sizing: border-box;  
-   }  
-   *, *:before, *:after {  
+}  
+*, *:before, *:after {  
     -webkit-box-sizing: border-box;  
     box-sizing: border-box;  
     margin: 0;  
