@@ -1,66 +1,67 @@
 var todoList = {
-    todos: [],  
-  addTodo: function(todoText) {  
-   this.todos.push({  
-    todoText: todoText,  
-    completed: false  
-   });  
-  }, 
-  deleteTodo: function(position) {  
-    this.todos.splice(position, 1);  
-   }, 
-   deleteCompletedTodos: function() {  
-    // Contar hacia atras para evitar el problema del indice al borrar todos.  
-    for (var i = this.todos.length - 1; i >= 0; i--) {  
-     if (this.todos[i].completed === true) {  
-      this.deleteTodo(i);  
-     }  
+    todos: [],
+    addTodo: function(todoText) {  
+        this.todos.push({  
+            todoText: todoText,  
+            completed: false  
+        });  
+    }, 
+    deleteTodo: function(position) {  
+        this.todos.splice(position, 1);  
+    }, 
+    deleteCompletedTodos: function() {  
+        // Contar hacia atras para evitar el problema del indice al borrar todos.  
+        for (var i = this.todos.length - 1; i >= 0; i--) {  
+            if (this.todos[i].completed === true) {  
+                this.deleteTodo(i);  
+            }  
+        }  
+    },  
+    updateTodo: function(newTodoText, position) {  
+        this.todos[position].todoText = newTodoText;  
+    },  
+    toggleCompleted: function(todo) {  
+        todo.completed = !todo.completed;  
+    },  
+    toggleAll: function() {  
+        var totalTodos = this.todos.length;  
+        var completedTodos = 0;  
+       // contar el numero de todos.  
+        this.todos.forEach(function(todo) {  
+            if (todo.completed === true) {  
+                completedTodos++;  
+            }  
+        });  
+        if (completedTodos === totalTodos) {  
+            todoList.todos.forEach(function(todo) {  
+                todo.completed = false;  
+            });  
+        }  
+        else {  
+            todoList.todos.forEach(function(todo) {  
+                todo.completed = true;  
+            });  
+        }  
+    },  
+    updateLocalStorage: function() {  
+        localStorage.setItem('todos', JSON.stringify(todoList.todos));  
+    }, 
+    getLocalStorage: function() {  
+        if (localStorage.getItem('todos') !== null) {  
+            todoList.todos = JSON.parse(localStorage.getItem('todos'));  
+        }  
     }  
-   },  
-   updateTodo: function(newTodoText, position) {  
-    this.todos[position].todoText = newTodoText;  
-   },  
-   toggleCompleted: function(todo) {  
-    todo.completed = !todo.completed;  
-   },  
-   toggleAll: function() {  
-    var totalTodos = this.todos.length;  
-    var completedTodos = 0;  
-    // contar el numero de todos.  
-    this.todos.forEach(function(todo) {  
-     if (todo.completed === true) {  
-      completedTodos++;  
-     }  
-    });  
-    if (completedTodos === totalTodos) {  
-     todoList.todos.forEach(function(todo) {  
-      todo.completed = false;  
-     });  
-    }  
-    else {  
-     todoList.todos.forEach(function(todo) {  
-      todo.completed = true;  
-     });  
-    }  
-   },  
-   updateLocalStorage: function() {  
-    localStorage.setItem('todos', JSON.stringify(todoList.todos));  
-   }, 
-   getLocalStorage: function() {  
-    if (localStorage.getItem('todos') !== null) {  
-     todoList.todos = JSON.parse(localStorage.getItem('todos'));  
-    }  
-   }  
-  };  
-  var handlers = {  
+};
+
+var handlers = {  
     addTodo: function() {  
-     var addTodoTextInput = document.getElementById('addTodoTextInput');  
-     // Test if addTodoTextInput.value no este vacio y no sea silo un espacio en blanco antes de añadirlo a todo  
-     if (/S/.test(addTodoTextInput.value)) {  
-      todoList.addTodo(addTodoTextInput.value);  
-      addTodoTextInput.value = '';  
-      view.displayTodos();  
-     }  
+        var addTodoTextInput = document.getElementById('addTodoTextInput');  
+        // Test if addTodoTextInput.value no este vacio y no sea silo un espacio en blanco antes de añadirlo a todo  
+        if (/S/.test(addTodoTextInput.value)) {  
+            todoList.addTodo(addTodoTextInput.value);  
+            addTodoTextInput.value = '';  
+            view.displayTodos();  
+        }  
     },  
     deleteTodo: function(position) {  
         todoList.deleteTodo(position);  
@@ -180,7 +181,7 @@ var view = {
         else {  
             toggleAllButton.classList.remove('toggle-all-checked');  
         } 
-        // If por lo menos uno de todo esta completo, mostrar el boton Clear, sino no mostrar.  
+        // If por lo menos uno de todo esta completo, mostrar el boton completada, sino no mostrar.  
         switch(completedTodos) {  
             case 0:  
              deleteCompletedButton.style.display = 'none';  
