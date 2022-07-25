@@ -9,8 +9,7 @@ var todoList = {
     deleteTodo: function(position) {  
         this.todos.splice(position, 1);  
     }, 
-    deleteCompletedTodos: function() {  
-        // Contar hacia atras para evitar el problema del indice al borrar todos.  
+    deleteCompletedTodos: function() {    
         for (var i = this.todos.length - 1; i >= 0; i--) {  
             if (this.todos[i].completed === true) {  
                 this.deleteTodo(i);  
@@ -174,7 +173,6 @@ var view = {
             }  
         }); 
         var uncompletedTodos = totalTodos - completedTodos;  
-        // If all todos estan completos, agregar 'toggle-all-checked' class a toggleAll button.  
         if (completedTodos === totalTodos && totalTodos > 0) {  
             toggleAllButton.classList.add('toggle-all-checked');  
         } 
